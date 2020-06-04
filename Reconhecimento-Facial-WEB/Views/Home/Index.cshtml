@@ -1,0 +1,165 @@
+﻿@model Reconhecimento_Facial_WEB.Models.Face
+
+<br />
+<style>
+    .file-upload {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Bem-vindo</h1>
+    <h3>Carrega a sua imagem abaixo e saiba o que os computadores pensam de você ;)</h3>
+</div>
+<hr />
+<div class="row">
+    <div class="col col-lg-3">
+    </div>
+    <div class="col-md-auto">
+        <form asp-action="Index" class="form-inline text-center" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-group">
+                <input type="text" class="form-control file-upload-text" disabled placeholder="select a file..." />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info file-upload-btn">
+                        Browse...
+                        <input type="file" class="file-upload" asp-for="Imagem" />
+                    </button>
+                </span>
+            </div>
+            &nbsp;<button class="btn btn-outline-dark " type="submit">Enviar</button>
+        </form>
+    </div>
+    <div class="col col-lg-4">
+    </div>
+</div>
+@if (Model.DadosFace != null)
+{
+    <div class="row">
+
+        <div class="col col-md-6">            
+            <div class="form-group" style="padding-top: 2%;">
+                <h3 style=" padding-bottom: 4%;">Dados</h3>
+                <div class="card" style="width: 25rem;">
+                    @if (Model.url_imagem != null)
+                    {
+                        <img class="card-img-top" src="@Model.url_imagem" alt="Card image cap">
+                    }                    
+                    <ul class="list-group list-group-flush">
+                        @if (Model.DadosFace != null)
+                        {
+                            <li class="list-group-item">Idade: @Model.DadosFace.FaceAttributes.Age</li>
+                            <li class="list-group-item">Sexo: @Model.DadosFace.FaceAttributes.Gender</li>
+                            <li class="list-group-item">Óculos: @Model.DadosFace.FaceAttributes.Glasses</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-6">
+            <div class="card-body">
+                <h3>Emoção</h3>
+
+                Neutro:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" 
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Neutral.ToString("N1").Replace(",","."),"%")" 
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Neutral.ToString("N2").Replace(",","."))" aria-valuemin="0" 
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Neutral.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+
+                Raiva:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" 
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Anger.ToString("N1").Replace(",","."),"%")"
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Anger.ToString("N2").Replace(",","."))" aria-valuemin="0"
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Anger.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+
+                Desprezo:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" 
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Contempt.ToString("N1").Replace(",","."),"%")"
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Contempt.ToString("N2").Replace(",","."))" aria-valuemin="0"
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Contempt.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+
+                Nojo:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar"
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Disgust.ToString("N1").Replace(",","."),"%")"
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Disgust.ToString("N2").Replace(",","."))" aria-valuemin="0"
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Disgust.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+
+                Medo:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Fear.ToString("N1").Replace(",","."),"%")"
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Fear.ToString("N2").Replace(",","."))" aria-valuemin="0"
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Fear.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+
+                Felicidade:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Happiness.ToString("N1").Replace(",","."),"%")"
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Happiness.ToString("N2").Replace(",","."))" aria-valuemin="0"
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Happiness.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+
+                Tristeza:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar"
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Sadness.ToString("N1").Replace(",","."),"%")"
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Sadness.ToString("N2").Replace(",","."))" aria-valuemin="0"
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Sadness.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+
+                Surpresa:
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                         style="width: @string.Concat(Model.DadosFace.FaceAttributes.Emotion.Surprise.ToString("N1").Replace(",","."),"%")"
+                         aria-valuenow="@string.Concat(Model.DadosFace.FaceAttributes.Emotion.Surprise.ToString("N2").Replace(",","."))" aria-valuemin="0"
+                         aria-valuemax="100">@Model.DadosFace.FaceAttributes.Emotion.Surprise.ToString("N2").Replace(",",".")</div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    function initializeFileUploads() {
+        $('.file-upload').change(function () {
+            var file = $(this).val();
+            $(this).closest('.input-group').find('.file-upload-text').val(file);
+        });
+        $('.file-upload-btn').click(function () {
+            $(this).find('.file-upload').trigger('click');
+        });
+        $('.file-upload').click(function (e) {
+            e.stopPropagation();
+        });
+    }
+
+
+    // On document load:
+    $(function () {
+        initializeFileUploads();
+    });
+</script>
